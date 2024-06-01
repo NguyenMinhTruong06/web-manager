@@ -1,0 +1,131 @@
+.container-body {
+    width: 70%;
+    max-height: 100%;
+    margin-top: 50px;
+    margin-left: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .row {
+    width: 100%;
+    margin-top: 50px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-details {
+    color: blueviolet;
+    padding: 20px;
+    margin-top: 50px;
+    text-align: center; /* Căn giữa nội dung */
+  }
+  
+  .product-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .product-actions button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .product-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .product-quantity button {
+    background-color: transparent;
+    border: 1px solid black;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .product-quantity input {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    text-align: center;
+    margin: 0 10px;
+    width: 40px;
+  }
+  
+  .icon {
+    width: 20px;
+    cursor: pointer;
+    padding: 1px 1px;
+    border-radius: 10px;
+  }
+  
+  .addfile {
+    margin-left: 20px;
+  }
+  
+  .ds-danhmuc {
+    margin-top: 20px;
+  }
+  
+  .category-list {
+    margin-top: 20px;
+  }
+  
+  .btn-edit {
+    margin-left: 20px;
+  }
+  
+  .btn-update {
+    width: 60px;
+    border-radius: 10px;
+    background-color: #4caf50;
+    border: none;
+    height: 30px;
+    margin-left: 5px;
+    color: #fafafa;
+  }
+  
+  .btn-danger {
+    width: 60px;
+    border-radius: 10px;
+    background-color: red;
+    border: none;
+    height: 30px;
+    margin-left: 5px;
+    color: #fafafa;
+  }
+  
+  .category-input {
+    padding: 5px;
+    margin-right: 10px;
+    width: 200px;
+  }
+  
+  .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .btn-addcategory {
+    padding: 15px 20px; /* Tăng kích thước của nút */
+    background-color: #007bff; /* Đặt màu nền xanh */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px; /* Tăng kích thước chữ */
+    border-radius: 8px; /* Bo tròn góc */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi màu khi di chuột */
+  }
+  
+  .btn-addcategory:hover {
+    background-color: #0056b3; /* Màu nền xanh đậm khi di chuột */
+  }  

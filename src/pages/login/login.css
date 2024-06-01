@@ -1,0 +1,59 @@
+.icon{
+    width: 20px;
+    cursor: pointer;
+    padding: 1px 1px;
+    border-radius: 10px;
+    margin-left: 0px;
+}
+.container-body{
+    width: auto;
+    max-height: 100%;
+    margin-top: 50px;
+    margin-left: 5%; 
+}
+.loginform{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+   
+}
+.boxloginform{
+    width: 720px;
+    height: 480px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    
+}
+.loginform-input{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 20px;
+    border-color: red;
+    width: 250px;
+}
+
+.input{
+    outline: none;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border-width: 1px;
+    padding-right: 50px;
+    height: 40px;
+}
+.heading-form{
+    margin-top: 30px;
+}
+.btn-gradient{
+    margin-top: 20px;
+    height: 30px;
+    background: linear-gradient(to right, #7dbeef,rgb(54, 217, 73));
+    border-radius: 5px;
+    width: 120px;
+    color: white;
+    border: none;
+    background-color: black;
+}

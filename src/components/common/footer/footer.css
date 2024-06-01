@@ -1,0 +1,19 @@
+.box {
+    top: 0;
+    position: fixed;
+    width: 70%;
+    height: 30px;
+    background-color: #060102;
+    display: flex;
+    justify-content: space-between;
+    z-index: 4;
+    margin-left: 30%;
+}
+.box1 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #fafafa;
+    margin-left: 20px;
+    margin-right: 20px;
+}
