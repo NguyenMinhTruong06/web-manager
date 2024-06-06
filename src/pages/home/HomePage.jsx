@@ -13,20 +13,22 @@ const HomePage = () => {
   const [totalSales, setTotalSales] = useState(0);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchOrders = async () => {
       try {
-        const response = await axiosClient.get("/products/orderdetail/order"); // URL của API để lấy sản phẩm đã bán
+        const response = await axiosClient.get("/orders/getall"); // URL của API để lấy sản phẩm đã bán
         console.log(response);
         setProducts(response);
-
+        const totalOrders = response.length;
         
-        const totalProducts = response.length;
-        const totalOrders = response.reduce((acc, product) => acc + product.orderCount, 0);
-        const totalSalesValue = response.reduce((acc, product) => acc + product.totalPrice, 0);
-
-        setProductCount(totalProducts);
         setOrderCount(totalOrders);
-        setTotalSales(totalSalesValue.toLocaleString());
+        let totalMoney = 0;
+        for (let i = 0; i < response.length; i++) {
+          const order = response[i];  // Access the current order object
+          if (order && typeof order.totalMoney === 'number') {
+            totalMoney += order.totalMoney;
+          }
+        }
+        setTotalSales(totalMoney);
       } catch (err) {
         setError(err);
       } finally {
@@ -34,10 +36,28 @@ const HomePage = () => {
       }
     };
 
-    fetchProducts();
+    fetchOrders();
   }, []);
 
-  
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axiosClient.get(`/products/all`);
+        
+        const totalProducts = response.products.length;
+       
+        console.log('totalProduct'+ totalProducts);
+        setProductCount(totalProducts);
+        
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, []);
 
   return (
     
@@ -45,11 +65,11 @@ const HomePage = () => {
         <h2>Thống kê </h2>
         <section className="statistics">
           <div className="stat-item product-count">
-            <h2>Tổng Số Sản Phẩm</h2>
+            <h2>Sản Phẩm</h2>
             <span id="product-count-value">{productCount}</span>
           </div>
           <div className="stat-item order-count">
-            <h2>Tổng Số Đơn Hàng</h2>
+            <h2>Đơn Hàng</h2>
             <span id="order-count-value">{orderCount}</span>
           </div>
           <div className="stat-item total-sales">

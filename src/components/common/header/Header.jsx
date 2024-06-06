@@ -46,7 +46,7 @@ const Header = () => {
                 />
               </svg>
 
-              <Link to="/search">Tìm kiếm</Link>
+              <Link to="/searchproduct">Tìm kiếm</Link>
             </div>
             <div className="menu-1">
               <svg
@@ -103,7 +103,7 @@ const Header = () => {
                 />
               </svg>
 
-              <Link to="/">Quản lý đơn hàng</Link>
+              <Link to="/ordermanager">Quản lý đơn hàng</Link>
             </div>
           </div>
           <div className="menu-1">
@@ -122,7 +122,7 @@ const Header = () => {
               />
             </svg>
 
-            <Link to="/">Quản lý tài khoản</Link>
+            <Link to="/accountmanager">Quản lý tài khoản</Link>
           </div>
         </div>
        

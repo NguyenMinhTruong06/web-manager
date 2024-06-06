@@ -164,8 +164,10 @@ const UpdateProduct = () => {
           `/image/delete/${removedImage.id}`
         );
         console.log("Image deleted successfully:", response);
+        
       } catch (error) {
         console.error("Error deleting image:", error);
+        
       }
     }
     setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -174,14 +176,12 @@ const UpdateProduct = () => {
     <div>
       <div className="container-body">
         <div className="row">
-          
             <input
               className="addfile"
               type="file"
               multiple
               onChange={handleImageChange}
             ></input>
-
             <div className="thumnail-container">
               {selectedImages.map((image, index) => (
                 <div className="thumnail-item" key={index}>

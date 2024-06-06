@@ -5,14 +5,17 @@ import axiosClient from "../../api/axiosClient";
 
 const Product = () => {
   const [products, setProduct] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 5;
   const visiblePages = 1;
+  
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -34,7 +37,10 @@ const Product = () => {
     };
 
     fetchProduct();
+    
   }, [currentPage]);
+  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -48,17 +54,6 @@ const Product = () => {
     navigate("/addproduct");
   };
 
-  const handleDeleteProduct = async (id) => {
-    try {
-      await axiosClient.delete(`/products/${id}`);
-      // Sau khi xóa thành công, cập nhật danh sách sản phẩm
-      const updatedProducts = products.filter((product) => product.id !== id);
-      setProduct(updatedProducts);
-    } catch (err) {
-      console.error("Failed to delete product", err);
-    }
-    // const response = await axiosClient.delete(`/products/${id}`);
-  };
   const renderPagination = () => {
     const paginationButtons = [];
 
@@ -120,6 +115,28 @@ const Product = () => {
 
     return paginationButtons;
   };
+  
+  const handleDeleteClick = async (productId) => {
+    try {
+      const response = await axiosClient.delete(`/products/${productId}`);
+
+      console.log("Product deleted successfully:", response);
+      setProduct((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productId)
+    );
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+      
+    } catch {
+      console.error("Product deletion failed:", error);
+      setShowErrorMessage(true);
+      setTimeout(() => {
+        setShowErrorMessage(false);
+      }, 3000);
+    }
+  };
 
   return (
     <div>
@@ -127,6 +144,7 @@ const Product = () => {
         <div className="product-manager">
           <h1>Quản lý sản phẩm</h1>
         </div>
+        
         <div className="product-container">
           <div className="product-row">
             <div className="product-column id">Id</div>
@@ -174,17 +192,23 @@ const Product = () => {
                 </Link>
                 <button
                   className="delete-btn"
-                  onClick={handleDeleteProduct(product.id)}
+                  onClick={() => handleDeleteClick(product.id)}
                 >
                   Xoá
                 </button>
               </div>
             </div>
           ))}
-          
+
           <div className="pagination">{renderPagination()}</div>
         </div>
+
+        
+        {showSuccessMessage && (
+          <div className="success-message">Xoá thành công!</div>
+        )}
       </div>
+      {showErrorMessage && <div className="success-message">Xoá thất bại!</div>}
     </div>
   );
 };

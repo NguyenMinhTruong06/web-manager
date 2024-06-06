@@ -5,6 +5,10 @@ import LayoutLogin from "./components/layouts/LayoutLogin";
 import AddProduct from "./pages/addproduct/AddProduct";
 import Categories from "./pages/categories/Categories";
 import Product from "./pages/productmanager/Product";
+import AccountManager from "./pages/accountmanager/AccountManager";
+import SearchProduct from "./pages/searchproduct/SearchProduct";
+import OrderManager from "./pages/ordermanager/OrderManager";
+
 
 
 
@@ -24,7 +28,9 @@ function App() {
           <Route path="/addproduct"element ={<AddProduct />} />
           <Route path="/categories"element ={<Categories />} />
           <Route path="/productmanager"element ={<Product />} />
-       
+          <Route path="/accountmanager"element ={<AccountManager />} />
+          <Route path="/searchproduct"element ={<SearchProduct />} />
+          <Route path="/ordermanager" element ={<OrderManager/>}/>
         </Route>
         <Route path="/" element={<LayoutLogin />}>
           <Route path="/sign-in" element={<LoginPage />} />

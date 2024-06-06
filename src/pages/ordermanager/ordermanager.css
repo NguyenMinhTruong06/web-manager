@@ -1,0 +1,146 @@
+
+.product-container {
+    width: 96%;
+    margin: 2%;
+    border-collapse: collapse;
+  }
+  .product-row1 {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    
+    
+  }
+  
+  .product-column {
+    padding: 5px;
+    flex: 1;
+    flex-basis: 20%;
+  }
+  
+  .product-column.id {
+    flex: 0.5;
+    flex-basis: 6%;
+  }
+  .product-column.phone {
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.totalmoney {
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.status{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.payment{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.address{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.detail{
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.delete{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.id1 {
+    flex: 0.5;
+    flex-basis: 6%;
+  }
+  .product-column.phone1 {
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.detail1{
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.totalmoney1 {
+    flex-basis: 10%; 
+    text-align: center;
+  }
+  .product-column.status1{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.address1{
+    text-align: center;
+    flex-basis: 10%;
+    
+  }
+  .product-column.payment1{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  .product-column.delete1{
+    text-align: center;
+    flex-basis: 10%;
+  }
+  
+  
+  
+  
+  
+  .product-column button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    flex-basis: 15%;
+  }
+  
+ 
+  
+  .product-column .lock-btn {
+    background-color: #f44336;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border: none;
+   
+  }
+  
+  .product-manager {
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-btn {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .product-manager h1 {
+    text-align: center;
+    
+  }
+  .pagination-btn.active {
+    background-color: #007bff; 
+    color: white;
+  }
+  .active {
+    background-color: #007bff;
+    color: #fff;
+  }

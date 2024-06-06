@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import "./addproduct.css";
+import React, { useState, useEffect } from "react";
 import axiosClient from "../../api/axiosClient";
 
 const AddProduct = () => {
@@ -10,7 +10,7 @@ const AddProduct = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
-
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [options, setOptions] = useState([{ options: "", price: "" }]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const AddProduct = () => {
 
   const handlePostProductImage = async (productId) => {
     try {
-      console.log("ok");
+      
       const formData = new FormData();
       selectedImages.forEach((file) => formData.append("files", file));
       const response = await axiosClient.post(
@@ -58,7 +58,6 @@ const AddProduct = () => {
         name: productName,
         category_id: selectedCategoryId,
         description: productDescription,
-        
       };
 
       const response = await axiosClient.post("/products/post", productDTO);
@@ -71,9 +70,14 @@ const AddProduct = () => {
       setProductName("");
       setSelectedCategoryId("");
       setProductDescription("");
-      
+
       setSelectedImages([]);
       setOptions([]);
+      setShowSuccessMessage(true); // Hiển thị thông báo thành công
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    },3000);
+    
     } catch (error) {
       console.error("Error adding category:", error);
     }
@@ -115,12 +119,12 @@ const AddProduct = () => {
         prices: option.price,
       }));
 
-      
       const response = await axiosClient.post(
         `/options/post/${productId}`,
         optionDTOs
       );
       console.log(response);
+
     } catch (error) {
       if (error.response) {
         console.error("Error adding options:", error.response);
@@ -135,7 +139,7 @@ const AddProduct = () => {
   return (
     <div>
       <div className="container-body">
-        <div className="row">
+       
           <div className="row">
             <input
               className="addfile"
@@ -144,11 +148,11 @@ const AddProduct = () => {
               onChange={handleImageChange}
             ></input>
 
-            <div className="thumnail-container">
+            <div  className="thumbnail-container2">
               {selectedImages.map((image, index) => (
-                <div className="thumnail-item" key={index}>
+                <div className="thumbnail-item2" key={index}>
                   <img
-                    className="thumnail-image"
+                    className="thumbnail-image2"
                     src={URL.createObjectURL(image)}
                     alt={`Selected ${index}`}
                   />
@@ -193,7 +197,7 @@ const AddProduct = () => {
                 value={productDescription}
                 onChange={(e) => setProductDescription(e.target.value)}
               />
-              
+
               <div className="options-container">
                 {options.map((option, index) => (
                   <div key={index} className="option-item">
@@ -235,7 +239,9 @@ const AddProduct = () => {
                 </button>
               </div>
             </div>
-          </div>
+            {showSuccessMessage && (
+        <div className="success-message">Thêm thành công!</div>
+      )}
         </div>
       </div>
     </div>

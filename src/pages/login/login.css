@@ -9,7 +9,8 @@
     width: auto;
     max-height: 100%;
     margin-top: 50px;
-    margin-left: 5%; 
+    margin-left: 5%;
+    margin-right: 5%; 
 }
 .loginform{
     display: flex;
@@ -18,12 +19,13 @@
    
 }
 .boxloginform{
-    width: 720px;
-    height: 480px;
+    width: 560px;
+    height: 320px;
     align-items: center;
     display: flex;
     flex-direction: column;
     background-color: #fafafa;
+    margin-bottom: 50px;
     
 }
 .loginform-input{

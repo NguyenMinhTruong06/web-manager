@@ -70,10 +70,10 @@ const Categories = () => {
   return (
     <div>
       <div className="container-body">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="product-details">
-              <h2>Thêm danh mục mới</h2>
+        
+          
+            <div className="product-details1">
+              <h1>Quản lý danh mục</h1>
               <p>Tên danh mục</p>
               <div className="ip-category">
                 <input
@@ -124,8 +124,8 @@ const Categories = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          
+        
       </div>
     </div>
   );
