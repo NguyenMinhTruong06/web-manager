@@ -8,6 +8,7 @@ import Product from "./pages/productmanager/Product";
 import AccountManager from "./pages/accountmanager/AccountManager";
 import SearchProduct from "./pages/searchproduct/SearchProduct";
 import OrderManager from "./pages/ordermanager/OrderManager";
+import OrderDetail from "./pages/orderdetail/OrderDetail";
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/accountmanager"element ={<AccountManager />} />
           <Route path="/searchproduct"element ={<SearchProduct />} />
           <Route path="/ordermanager" element ={<OrderManager/>}/>
+          <Route path="/orderdetail/:orderId" element={<OrderDetail/>}/>
         </Route>
         <Route path="/" element={<LayoutLogin />}>
           <Route path="/sign-in" element={<LoginPage />} />

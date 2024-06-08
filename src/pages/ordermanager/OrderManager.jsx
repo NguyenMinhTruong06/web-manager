@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import "./ordermanager.css";
 
@@ -39,9 +39,7 @@ const OrderManager = () => {
   return (
     <div>
       <div className="container-body">
-        <div>
-            
-        </div>
+       
         <div className="product-manager">
           <h1>Quản lý đơn hàng</h1>
         </div>
@@ -76,7 +74,12 @@ const OrderManager = () => {
                 {order.paymentMethod}
               </div>
                 <div className="product-column detail">
-                    <button >Xem</button>
+                    
+                      <Link to={`/orderdetail/${order.id}`}>
+                    Xem
+                    </Link>
+                    
+                    
                 </div>
               <div className="product-column delete">
                 

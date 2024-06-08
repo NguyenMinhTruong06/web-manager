@@ -32,9 +32,9 @@ const UpdateProduct = () => {
     console.log("image", selectedImages);
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, []);
 
   const fetchCategories = async () => {
     try {

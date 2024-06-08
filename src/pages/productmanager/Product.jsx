@@ -182,7 +182,7 @@ const Product = () => {
               </div>
               <div className="product-column price">
                 {product.options && product.options.length > 0
-                  ? `${product.options[0].price} ₫`
+                  ? `${(product.options[0].price)} ₫`
                   : "No price available"}
               </div>
 

@@ -1,0 +1,46 @@
+.order-header, .order-details {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.order-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.order-info div {
+    flex: 1;
+    padding: 10px;
+}
+.order-info div:not(:last-child) {
+    border-right: 1px solid #ddd;
+}
+.order-info h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.order-info p {
+    margin: 5px 0;
+}
+.order-details h2 {
+    font-size: 20px;
+    color: #333;
+}
+.product-list {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    
+}
+.product-list th, .product-list td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+.product-list th {
+    background-color: #f2f2f2;
+}
