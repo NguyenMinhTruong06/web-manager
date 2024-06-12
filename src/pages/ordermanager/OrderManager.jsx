@@ -25,6 +25,8 @@ const OrderManager = () => {
   }, []);
 
  const handleDeleteClick = async(orderId)=>{
+  const isConfirmed = window.confirm("Bạn có chắc muốn xoá đơn hàng không?");
+  if(isConfirmed){
     const response = await axiosClient.delete(`/orders/${orderId}`);
     console.log("response"+response);
     setShowSuccessMessage(true);
@@ -34,7 +36,7 @@ const OrderManager = () => {
     setOrders((prevOrders) =>
         prevOrders.filter((order) => order.id !== orderId)
       );
-
+    }
  };
   return (
     <div>

@@ -135,6 +135,23 @@ const AddProduct = () => {
       }
     }
   };
+  const handleRemoveImage = async (index) => {
+    const removedImage = selectedImages[index];
+    if (removedImage.id) {
+      // Nếu ảnh đã có id (đã được lưu trong cơ sở dữ liệu), gửi request để xóa ảnh
+      try {
+        const response = await axiosClient.delete(
+          `/image/delete/${removedImage.id}`
+        );
+        console.log("Image deleted successfully:", response);
+        
+      } catch (error) {
+        console.error("Error deleting image:", error);
+        
+      }
+    }
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
 
   return (
     <div>
@@ -156,6 +173,12 @@ const AddProduct = () => {
                     src={URL.createObjectURL(image)}
                     alt={`Selected ${index}`}
                   />
+                  <button
+                    className="remove-image-button"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </button>
                 </div>
               ))}
             </div>

@@ -19,24 +19,28 @@ const SearchProduct = () => {
   
 
     const handleDeleteClick = async(productId)=>{
-        try{
-        const response = await axiosClient.delete(`/products/${productId}`)
-        
+      const isConfirmed = window.confirm("Bạn có chắc muốn xoá sản phẩm không?");
+      if (isConfirmed) {
+      try {
+        const response = await axiosClient.delete(`/products/${productId}`);
+  
         console.log("Product deleted successfully:", response);
-        
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.id !== productId)
+      );
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-        },3000);
-      }
-        catch{
-          console.error("Product deletion failed:", error);
-          setShowErrorMessage(true);
-          setTimeout(() => {
-            setShowErrorMessage(false);
-          },3000);
-        }
+        }, 3000);
         
+      } catch {
+        console.error("Product deletion failed:", error);
+        setShowErrorMessage(true);
+        setTimeout(() => {
+          setShowErrorMessage(false);
+        }, 3000);
+      }
+    }
       };
       const fetchCategories = async () => {
         try {

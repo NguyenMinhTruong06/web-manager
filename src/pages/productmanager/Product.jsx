@@ -117,6 +117,8 @@ const Product = () => {
   };
   
   const handleDeleteClick = async (productId) => {
+    const isConfirmed = window.confirm("Bạn có chắc muốn xoá sản phẩm không?");
+    if (isConfirmed) {
     try {
       const response = await axiosClient.delete(`/products/${productId}`);
 
@@ -136,6 +138,7 @@ const Product = () => {
         setShowErrorMessage(false);
       }, 3000);
     }
+  }
   };
 
   return (

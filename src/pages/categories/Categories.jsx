@@ -6,6 +6,8 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [editedCategory, setEditedCategory] = useState({ id: null, name: "" });
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showSuccessMessage1, setShowSuccessMessage1] = useState(false);
 
   useEffect(() => {
     fetchCategories();
@@ -37,12 +39,28 @@ const Categories = () => {
   };
 
   const handleDeleteCategory = async (id) => {
-    try {
-      const result = await axiosClient.delete(`/categories/${id}`);
-      setCategories(categories.filter((category) => category.id !== id));
-      console.log(result);
-    } catch (error) {
-      console.error("Error deleting category:", error);
+    const isConfirmed = window.confirm("Bạn có chắc muốn xoá danh mục và xoá hết các sản phẩm thuộc danh mục đó không?");
+    // try {
+    //   const result = await axiosClient.delete(`/categories/${id}`);
+    //   setCategories(categories.filter((category) => category.id !== id));
+    //   console.log(result);
+    // } catch (error) {
+    //   console.error("Error deleting category:", error);
+    // }
+    if (isConfirmed) {
+      try {
+        const result = await axiosClient.delete(`/categories/${id}`);
+        setCategories(categories.filter((category) => category.id !== id));
+        console.log(result);
+        setShowSuccessMessage(true); // Hiển thị thông báo thành công
+    setTimeout(() => {
+      setShowSuccessMessage(false),navigate("/productmanager");
+    },3000);
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
+    } else {
+      console.log("Delete action was cancelled.");
     }
   };
 
@@ -61,6 +79,10 @@ const Categories = () => {
         name: editedCategory.name,
       });
       setEditedCategory({ id: null, name: "" });
+      setShowSuccessMessage1(true); // Hiển thị thông báo thành công
+    setTimeout(() => {
+      setShowSuccessMessage1(false),navigate("/productmanager");
+    },3000);
     } catch (error) {
       console.error("Error updating category:", error);
       console.log(token);
@@ -124,8 +146,12 @@ const Categories = () => {
                 ))}
               </div>
             </div>
-          
-        
+            {showSuccessMessage && (
+        <div className="success-message">Xoá thành công!</div>
+      )}
+        {showSuccessMessage1 && (
+        <div className="success-message">Cập nhật thành công!</div>
+      )}
       </div>
     </div>
   );

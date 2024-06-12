@@ -25,8 +25,13 @@ const AccountManager = () => {
   }, []);
 
   const handleLockUnlock = async (userId, currentIsActive) => {
+    
     const newIsActive = currentIsActive === 1 ? 0 : 1;
+    const action = newIsActive === 1 ? "Mở Khoá" : "Khoá";
+    const confirmationMessage = `Bạn có chắc muốn ${action} tài khoản không?`;
 
+  const isConfirmed = window.confirm(confirmationMessage);
+    if(isConfirmed){
     try {
       const ok = await axiosClient.delete(
         `users/delete/${userId}?isActive=${newIsActive}`
@@ -47,6 +52,7 @@ const AccountManager = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  }
   };
 
   return (

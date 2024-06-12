@@ -35,7 +35,7 @@ function App() {
           <Route path="/orderdetail/:orderId" element={<OrderDetail/>}/>
         </Route>
         <Route path="/" element={<LayoutLogin />}>
-          <Route path="/sign-in" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
       
