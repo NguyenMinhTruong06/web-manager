@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import "./searchproduct.css";
 
 const SearchProduct = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
     const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

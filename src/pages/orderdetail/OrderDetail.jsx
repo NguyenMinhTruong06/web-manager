@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
+import { useNavigate } from 'react-router-dom';
+
 import "./orderdetail.css";
 const OrderDetail = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+
+
+
   const { orderId } = useParams();
 
   const [order, setOrders] = useState(null);
@@ -19,6 +33,7 @@ const OrderDetail = () => {
   if (!order) {
     return <div>Loading...</div>; // Hiển thị loading nếu order là null
   }
+  
   return (
     <div className="container-body">
       <div class="order-header">

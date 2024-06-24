@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./categories.css";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 
 const Categories = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   const [categories, setCategories] = useState([]);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [editedCategory, setEditedCategory] = useState({ id: null, name: "" });
@@ -81,7 +90,7 @@ const Categories = () => {
       setEditedCategory({ id: null, name: "" });
       setShowSuccessMessage1(true); // Hiển thị thông báo thành công
     setTimeout(() => {
-      setShowSuccessMessage1(false),navigate("/productmanager");
+      setShowSuccessMessage1(false),navigate("/categories");
     },3000);
     } catch (error) {
       console.error("Error updating category:", error);

@@ -264,6 +264,23 @@ p {
   display: flex;
   width: 100%;
 }
+.logout-button {
+  background-color: #f44336; /* Red background */
+  border: none;
+  color: white; /* White text */
+  padding: 15px 32px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* No underline */
+  display: inline-block; /* Make the container inline */
+  font-size: 16px; /* Increase font size */
+  margin: 4px 2px; /* Some margin */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 12px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
 
+.logout-button:hover {
+  background-color: #d32f2f; /* Darker red background on hover */
+}
 
 

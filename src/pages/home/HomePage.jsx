@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import axiosClient from "../../api/axiosClient";
 
 const HomePage = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  
   const [productCount, setProductCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
 
   useEffect(() => {
+   
     const fetchOrders = async () => {
       try {
         const response = await axiosClient.get("/orders/getall"); // URL của API để lấy sản phẩm đã bán

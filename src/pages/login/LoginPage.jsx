@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <div class="container-body">
+      <div class="container-body1">
         <div class="loginform">
           <div class="boxloginform">
             <label class="heading-form">Đăng nhập</label>
@@ -80,10 +80,7 @@ const LoginPage = () => {
                 Đăng nhập
               </button>
             </div>
-            {/* <p class="">Quên mật khẩu?</p>
-            <div>
-                <button class="btnsignin btn-gradient mb-3">Đăng ký</button>
-            </div> */}
+            
           </div>
         </div>
       </div>

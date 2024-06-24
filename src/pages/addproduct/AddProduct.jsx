@@ -1,8 +1,18 @@
 import "./addproduct.css";
 import React, { useState, useEffect } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 
 const AddProduct = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   const [selectedImages, setSelectedImages] = useState([]);
 
   const [categories, setCategories] = useState([]);
@@ -138,7 +148,7 @@ const AddProduct = () => {
   const handleRemoveImage = async (index) => {
     const removedImage = selectedImages[index];
     if (removedImage.id) {
-      // Nếu ảnh đã có id (đã được lưu trong cơ sở dữ liệu), gửi request để xóa ảnh
+      
       try {
         const response = await axiosClient.delete(
           `/image/delete/${removedImage.id}`

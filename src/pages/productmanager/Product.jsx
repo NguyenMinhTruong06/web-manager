@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./product.css";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import axiosClient from "../../api/axiosClient";
 
 const Product = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const navigate = useNavigate();
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 5;

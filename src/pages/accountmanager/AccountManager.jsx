@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import "./accountmanager.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocalStorage } from "@uidotdev/usehooks";
+
 
 const AccountManager = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
   const [users, setUser] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [lockUnlockMessage, setLockUnlockMessage] = useState("");

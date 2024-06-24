@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import "./updateproduct.css";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { Link, useNavigate } from "react-router-dom";
 const UpdateProduct = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
   const { productId } = useParams();
   console.log("productId - ", productId);
-  const navigate = useNavigate();
 
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -22,11 +30,12 @@ const UpdateProduct = () => {
   }, [productId]);
   const fetchProduct = async (productId) => {
     const response = await axiosClient.get(`/products/${productId}`);
+    console.log("response - ", response);
     setProduct(response);
     setProductName(response.name || ""); // Gán tên sản phẩm
     setProductDescription(response.description || ""); // Gán mô tả sản phẩm
     setSelectedCategoryId(response.category_id || ""); // Gán ID danh mục sản phẩm
-    setSelectedImages(response.images.map((image) => image.imageUrl) || []); // Gán danh sách hình ảnh sản phẩm
+    setSelectedImages(response.images); // Gán danh sách hình ảnh sản phẩm
     setOptions(response.options || []);
     console.log("options", options);
     console.log("image", selectedImages);
@@ -54,7 +63,7 @@ const UpdateProduct = () => {
     const files = Array.from(event.target.files);
     const selectedFiles = files.map((file) => ({
       file,
-      url: URL.createObjectURL(file),
+      imageUrl: URL.createObjectURL(file),
     }));
     setSelectedImages((prevImages) => [...prevImages, ...selectedFiles]);
   };
@@ -150,145 +159,148 @@ const UpdateProduct = () => {
     await handlePostProductImage(productId);
     setShowSuccessMessage(true); // Hiển thị thông báo thành công
     setTimeout(() => {
-      setShowSuccessMessage(false),navigate("/productmanager");
-    },3000);
-    
+      setShowSuccessMessage(false), navigate("/productmanager");
+    }, 3000);
   };
 
-  const handleRemoveImage = async (index) => {
+  const handleRemoveImage = async (imageId, index) => {
     const removedImage = selectedImages[index];
-    if (removedImage.id) {
-      // Nếu ảnh đã có id (đã được lưu trong cơ sở dữ liệu), gửi request để xóa ảnh
+    console.log("Removing image:", removedImage);
+
+    if (imageId) {
       try {
         const response = await axiosClient.delete(
-          `/image/delete/${removedImage.id}`
+          `/products/image/delete/${imageId}`
         );
         console.log("Image deleted successfully:", response);
-        
       } catch (error) {
-        console.error("Error deleting image:", error);
-        
+        console.error("Error deleting image:", error.response || error.message);
       }
+    } else {
+      console.log("Removed image does not have an id, skipping API call.");
     }
-    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+
+    setSelectedImages((prevImages) => {
+      const updatedImages = prevImages.filter((_, i) => i !== index);
+      console.log("Updated images list:", updatedImages);
+      return updatedImages;
+    });
   };
   return (
     <div>
       <div className="container-body">
         <div className="row">
+          <input
+            className="addfile"
+            type="file"
+            multiple
+            onChange={handleImageChange}
+          ></input>
+          <div className="thumnail-container">
+            {selectedImages.map((image, index) => (
+              <div className="thumnail-item" key={image.id}>
+                <img
+                  className="thumnail-image"
+                  src={image.imageUrl}
+                  alt={`Selected ${index}`}
+                />
+                <button
+                  className="remove-image-button"
+                  onClick={() => handleRemoveImage(image.id, index)}
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="col-md-6">
+          <div className="product-details">
+            <h2>Thông tin chi tiết sản phẩm</h2>
+            <p>Tên sản phẩm</p>
             <input
-              className="addfile"
-              type="file"
-              multiple
-              onChange={handleImageChange}
-            ></input>
-            <div className="thumnail-container">
-              {selectedImages.map((image, index) => (
-                <div className="thumnail-item" key={index}>
-                  <img
-                    className="thumnail-image"
-                    src={typeof image === "string" ? image : image.url}
-                    alt={`Selected ${index}`}
+              className="input"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+              type="text"
+            />
+            <p>Danh mục sản phẩm</p>
+
+            <select
+              className="input"
+              value={
+                categories.find(
+                  (category) => category.id === selectedCategoryId
+                )?.name || ""
+              }
+              onChange={handleCategoryChange}
+            >
+              <option value="">Chọn danh mục</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+
+            <p>Mô tả sản phẩm</p>
+            <input
+              className="input"
+              type="text"
+              value={productDescription}
+              onChange={(e) => setProductDescription(e.target.value)}
+            />
+
+            <div className="options-container">
+              {options.map((option, index) => (
+                <div key={option.id} className="option-item">
+                  <input
+                    className="option-input"
+                    type="text"
+                    placeholder="Option"
+                    value={option.option}
+                    onChange={(e) =>
+                      handleOptionNameChange(index, e.target.value)
+                    }
+                  />
+                  <input
+                    className="option-input"
+                    type="text"
+                    placeholder="Price"
+                    value={option.price}
+                    onChange={(e) =>
+                      handleOptionPriceChange(index, e.target.value)
+                    }
                   />
                   <button
-                    className="remove-image-button"
-                    onClick={() => handleRemoveImage(index)}
+                    className="remove-option"
+                    onClick={() => handleRemoveOption(option.id)}
                   >
-                    X
+                    Xóa
                   </button>
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="col-md-6">
-            <div className="product-details">
-              <h2>Thông tin chi tiết sản phẩm</h2>
-              <p>Tên sản phẩm</p>
-              <input
-                className="input"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                type="text"
-              />
-              <p>Danh mục sản phẩm</p>
+            <button className="add-option-btn" onClick={handleAddOption}>
+              Thêm Option
+            </button>
 
-              <select
-                className="input"
-                value={
-                  categories.find(
-                    (category) => category.id === selectedCategoryId
-                  )?.name || ""
-                }
-                onChange={handleCategoryChange}
+            <div className="product-actions">
+              <button
+                className="btn-addproduct"
+                onClick={() => handleUpdateProduct(productId)}
               >
-                <option value="">Chọn danh mục</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-
-              <p>Mô tả sản phẩm</p>
-              <input
-                className="input"
-                type="text"
-                value={productDescription}
-                onChange={(e) => setProductDescription(e.target.value)}
-              />
-
-              <div className="options-container">
-                {options.map((option, index) => (
-                  <div key={option.id} className="option-item">
-                    <input
-                      className="option-input"
-                      type="text"
-                      placeholder="Option"
-                      value={option.option}
-                      onChange={(e) =>
-                        handleOptionNameChange(index, e.target.value)
-                      }
-                    />
-                    <input
-                      className="option-input"
-                      type="text"
-                      placeholder="Price"
-                      value={option.price}
-                      onChange={(e) =>
-                        handleOptionPriceChange(index, e.target.value)
-                      }
-                    />
-                    <button
-                      className="remove-option"
-                      onClick={() => handleRemoveOption(option.id)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <button className="add-option-btn" onClick={handleAddOption}>
-                Thêm Option
+                Update
               </button>
-
-              <div className="product-actions">
-                <button
-                  className="btn-addproduct"
-                  onClick={() => handleUpdateProduct(productId)}
-                >
-                  Update
-                </button>
-              </div>
             </div>
-            {showSuccessMessage && (
-        <div className="success-message">Cập nhật thành công!</div>
-      )}
           </div>
-          
+          {showSuccessMessage && (
+            <div className="success-message">Cập nhật thành công!</div>
+          )}
+        </div>
       </div>
-      
     </div>
   );
 };
